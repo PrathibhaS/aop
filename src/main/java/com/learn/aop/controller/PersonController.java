@@ -1,6 +1,8 @@
 package com.learn.aop.controller;
 
 import com.learn.aop.model.Person;
+import com.learn.aop.service.IPersonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +15,12 @@ import java.util.List;
 @RequestMapping("/persons")
 public class PersonController {
 
+    @Autowired
+    private IPersonService personService;
+
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody Person p) {
-
+        personService.create(p);
     }
 
     @RequestMapping(method = RequestMethod.GET)
