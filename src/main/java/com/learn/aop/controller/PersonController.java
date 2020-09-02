@@ -2,6 +2,8 @@ package com.learn.aop.controller;
 
 import com.learn.aop.model.Person;
 import com.learn.aop.service.IPersonService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,13 +17,16 @@ import java.util.List;
 @RequestMapping("/persons")
 public class PersonController {
 
+    private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
+
     @Autowired
     private IPersonService personService;
 
-    @RequestMapping(method = RequestMethod.POST)
+    /*@RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody Person p) {
+        LOG.debug("inside post");
         personService.create(p);
-    }
+    }*/
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Person> getAll() {

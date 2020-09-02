@@ -20,17 +20,17 @@ public class PersonService implements IPersonService {
     }
 
     @Override
-    public List<Person> getall() {
-        return null;
+    public List<Person> getAll() {
+        return repository.findAll();
     }
 
     @Override
-    public Person getPerson(int ID) {
-        return null;
+    public Person getPerson(int id) {
+        return repository.getOne(id);
     }
 
     @Override
-    public void deleteByID(int ID) {
-
+    public void deleteByID(int id) {
+        repository.deleteById(id);
     }
 }
