@@ -22,15 +22,15 @@ public class PersonController {
     @Autowired
     private IPersonService personService;
 
-    /*@RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody Person p) {
         LOG.debug("inside post");
         personService.create(p);
-    }*/
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Person> getAll() {
-        return null;
+        return personService.getAll();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
