@@ -35,11 +35,12 @@ public class PersonController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
     public Person getPerson(@PathVariable("id") int pid) {
-        return null;
+        return personService.getPerson(pid);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
     public void delete(@PathVariable("id") int id) {
+        personService.deleteByID(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
