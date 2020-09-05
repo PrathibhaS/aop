@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService implements IPersonService {
@@ -26,7 +27,8 @@ public class PersonService implements IPersonService {
 
     @Override
     public Person getPerson(int id) {
-        return repository.getOne(id);
+        Optional<Person> result = repository.findById(id);
+        return result.orElse(null);
     }
 
     @Override

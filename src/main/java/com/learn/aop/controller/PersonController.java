@@ -38,7 +38,7 @@ public class PersonController {
         return personService.getPerson(pid);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         personService.deleteByID(id);
     }
