@@ -1,5 +1,6 @@
 package com.learn.aop.controller;
 
+import com.learn.aop.annotation.Log;
 import com.learn.aop.model.Person;
 import com.learn.aop.service.IPersonService;
 import org.slf4j.Logger;
@@ -38,6 +39,7 @@ public class PersonController {
         return personService.getPerson(pid);
     }
 
+    @Log
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public void delete(@PathVariable("id") int id) {
         personService.deleteByID(id);
