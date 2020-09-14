@@ -1,11 +1,16 @@
 package com.learn.aop.aspect;
 
+import com.learn.aop.exception.ObjectNotFoundException;
+import com.learn.aop.model.Person;
+import com.learn.aop.service.IPersonService;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -15,6 +20,9 @@ import java.util.Date;
 public class LoggingAspect {
 
     private static Logger LOG = LoggerFactory.getLogger(LoggingAspect.class);
+
+    @Autowired
+    private IPersonService personService;
 
     @Around("execution(* com.learn.aop.controller.PersonController.*(..))")
     public Object addLoggers(ProceedingJoinPoint pjp) throws Throwable {
@@ -32,8 +40,14 @@ public class LoggingAspect {
 
     }
 
-    @Before("@annotation(com.learn.aop.annotation.Log)")
-    public void logObjectBeforeDeletion() {
-        LOG.debug("Calling delete method");
+    @Before("@annotation(com.learn.aop.annotation.CheckIfExists)")
+    public void logObjectBeforeDeletion(JoinPoint jpt) throws ObjectNotFoundException {
+        Object[] args = jpt.getArgs();
+        LOG.debug("Calling method: {} with ID: {}", jpt.getSignature(), args[0]);
+        Person p = personService.getPerson((int) args[0]);
+        if(p == null)
+            throw new ObjectNotFoundException();
+        else
+            LOG.debug("Object to be deleted: {}", p);
     }
 }
