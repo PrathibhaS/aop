@@ -15,12 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Aspect
 @Component //adding this because this class needs to be bean to be detected
 public class LoggingAspect {
 
     private static Logger LOG = LoggerFactory.getLogger(LoggingAspect.class);
+    private Map<Integer, Person> cache = new HashMap<>();
 
     @Autowired
     private IPersonService personService;
@@ -52,7 +55,18 @@ public class LoggingAspect {
             LOG.debug("Object to be deleted: {}", p);
     }
 
-    @Pointcut("within(com.learn.aop.controller.PersonController.getPerson(..)")
+    @Pointcut("execution(* com.learn.aop.controller.PersonController.getPerson(..))")
     private void cachePointcut() {}
 
+    @Around("cachePointcut()")
+    public Person cacheObject(ProceedingJoinPoint jp) throws Throwable {
+        Object[] args = jp.getArgs();
+        if (cache.containsKey(args[0]))
+            return cache.get(args[0]);
+        else {
+            Object result = jp.proceed();
+            cache.put((int) args[0], (Person) result);
+            return (Person) result;
+        }
+    }
 }
