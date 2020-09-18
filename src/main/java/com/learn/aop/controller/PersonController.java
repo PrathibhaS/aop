@@ -1,6 +1,7 @@
 package com.learn.aop.controller;
 
 import com.learn.aop.annotation.CheckIfExists;
+import com.learn.aop.exception.ObjectNotFoundException;
 import com.learn.aop.model.Person;
 import com.learn.aop.service.IPersonService;
 import org.slf4j.Logger;
@@ -35,7 +36,7 @@ public class PersonController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public Person getPerson(@PathVariable("id") int pid) {
+    public Person getPerson(@PathVariable("id") int pid) throws ObjectNotFoundException {
         return personService.getPerson(pid);
     }
 
