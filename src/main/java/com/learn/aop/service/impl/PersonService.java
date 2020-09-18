@@ -1,5 +1,6 @@
 package com.learn.aop.service.impl;
 
+import com.learn.aop.exception.ObjectNotFoundException;
 import com.learn.aop.model.Person;
 import com.learn.aop.repository.IPersonRepository;
 import com.learn.aop.service.IPersonService;
@@ -26,9 +27,9 @@ public class PersonService implements IPersonService {
     }
 
     @Override
-    public Person getPerson(int id) {
+    public Person getPerson(int id) throws ObjectNotFoundException {
         Optional<Person> result = repository.findById(id);
-        return result.orElse(null);
+        return result.orElseThrow(ObjectNotFoundException::new);
     }
 
     @Override
