@@ -46,8 +46,7 @@ public class PersonController {
         personService.deleteByID(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody Person p, @PathVariable("id") int id) {
-
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public void update(@RequestBody Person p, @PathVariable("id") int pid) {
     }
 }
