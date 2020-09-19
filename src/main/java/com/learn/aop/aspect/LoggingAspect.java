@@ -5,6 +5,7 @@ import com.learn.aop.model.Person;
 import com.learn.aop.service.IPersonService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -68,5 +69,10 @@ public class LoggingAspect {
             cache.put((int) args[0], (Person) result);
             return (Person) result;
         }
+    }
+
+    @AfterThrowing(pointcut = "within(com.learn.aop.controller.PersonController)", throwing = "e")
+    public void logException(JoinPoint jp, ObjectNotFoundException e) {
+        LOG.error("Exception occurred {}", e.getMessage());
     }
 }
