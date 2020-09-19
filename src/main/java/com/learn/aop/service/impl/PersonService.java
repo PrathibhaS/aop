@@ -29,7 +29,7 @@ public class PersonService implements IPersonService {
     @Override
     public Person getPerson(int id) throws ObjectNotFoundException {
         Optional<Person> result = repository.findById(id);
-        return result.orElseThrow(ObjectNotFoundException::new);
+        return result.orElseThrow(() -> new ObjectNotFoundException("ID " + id + " not found"));
     }
 
     @Override

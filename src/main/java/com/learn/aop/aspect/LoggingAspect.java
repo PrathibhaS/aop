@@ -50,10 +50,7 @@ public class LoggingAspect {
         Object[] args = jpt.getArgs();
         LOG.debug("Calling method: {} with ID: {}", jpt.getSignature(), args[0]);
         Person p = personService.getPerson((int) args[0]);
-        if(p == null)
-            throw new ObjectNotFoundException();
-        else
-            LOG.debug("Object to be deleted: {}", p);
+        LOG.debug("Object to be deleted: {}", p);
     }
 
     @Pointcut("execution(* com.learn.aop.controller.PersonController.getPerson(..))")
