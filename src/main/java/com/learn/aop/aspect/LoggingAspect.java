@@ -19,6 +19,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 1. add logger by annotation to print row which will be deleted --done
+ * 2. pointcut eg --done
+ * 3. example for introductions
+ * 4. after throwing eg --done
+ * 5. controller advice & binding --done
+ */
 @Aspect
 @Component //adding this because this class needs to be bean to be detected
 public class LoggingAspect {

@@ -1,12 +1,14 @@
 package com.learn.aop.controller;
 
 import com.learn.aop.annotation.CheckIfExists;
+import com.learn.aop.exception.InvalidRequestException;
 import com.learn.aop.exception.ObjectNotFoundException;
 import com.learn.aop.model.Person;
 import com.learn.aop.service.IPersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +27,9 @@ public class PersonController {
     private IPersonService personService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public void create(@RequestBody Person p) {
+    public void create(@RequestBody Person p, BindingResult binding) throws InvalidRequestException {
+        if(binding.hasErrors())
+            throw new InvalidRequestException();
         LOG.debug("inside post");
         personService.create(p);
     }
