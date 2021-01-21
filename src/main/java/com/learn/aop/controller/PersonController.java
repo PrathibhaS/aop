@@ -29,7 +29,7 @@ public class PersonController {
     @RequestMapping(method = RequestMethod.POST)
     public void create(@RequestBody Person p, BindingResult binding) throws InvalidRequestException {
         if(binding.hasErrors())
-            throw new InvalidRequestException();
+            throw new InvalidRequestException(binding);
         LOG.debug("inside post");
         personService.create(p);
     }
